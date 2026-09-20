@@ -1,52 +1,33 @@
--- ==============================================================================
--- LAB 04: NORMALIZATION - OVERVIEW OF 1NF
--- Roll Number : 2024-SE-37
--- Description :  Analysis of the Bookstore data, identifying FDs, 
---               anomalies, and implementing First Normal Form (1NF).
--- ==============================================================================
+# 🗃️ Lab 07 / Open-Ended Lab: Car Rental Management System
 
-/*
-TASK 1: FD AND ANOMALY ANALYSIS
-Analyzing the raw bookstore data reveals the following Functional Dependencies:
-* OrderID -> OrderDate, CustID
-* CustID -> CustName, CustEmail
-* BookID -> BookTitle, Publisher, UnitPrice
-* (OrderID, BookID) -> Qty
+## 📖 Overview
+This repository contains the complete implementation and analysis for the **Car Rental Management System** open-ended database lab. The project demonstrates the transition from unorganized spreadsheet data to a fully structured relational database, incorporating advanced SQL features like Normalization (1NF to 3NF), complex JOINs, Views, Triggers, and Stored Procedures.
 
-This unnormalized design suffers from three major anomalies:
-* Insertion Anomaly: A new book cannot be added to the inventory unless a customer actually buys it.
-* Update Anomaly: If a book's price changes, every single order row containing that book must be updated.
-* Deletion Anomaly: Deleting order O-502 permanently erases Areeba's email address from the system.
-*/
+---
 
--- ==============================================================================
--- TASK 2: 1NF IMPLEMENTATION
--- ==============================================================================
-CREATE DATABASE IF NOT EXISTS bookstore_norm;
-USE bookstore_norm;
+## 🧠 Concepts & Tasks Implemented
+* **Database Design & Constraints:** Created normalized tables (`customers`, `vehicles`, `rentals`, `payments`) with appropriate Primary Keys, Foreign Keys, `CHECK`, and `DEFAULT` constraints.
+* **Normalization (1NF - 3NF):** Resolved data redundancy, insertion/update/deletion anomalies, and achieved strict third normal form.
+* **Complex JOIN Queries:** Answered real-world business queries using `INNER JOIN`, `LEFT JOIN`, and aggregate functions (`GROUP BY`, `COUNT`).
+* **Views:** Created a consolidated reporting view (`rental_summary_view`) for administrative tracking.
+* **Triggers:** Implemented an automated database trigger (`update_car_status`) to automatically switch vehicle availability status upon new rentals.
+* **Stored Procedures:** Developed a transactional stored procedure (`addNewRental`) for rental registration and automated bill calculations based on daily rates.
 
-DROP TABLE IF EXISTS OrderBook_1NF;
+---
 
--- To achieve 1NF, all values are made atomic and repeating groups are removed.
--- The combination of (OrderID, BookID) serves as the composite primary key.
-CREATE TABLE OrderBook_1NF (
-    OrderID VARCHAR(10),
-    BookID VARCHAR(10),
-    OrderDate DATE,
-    CustID VARCHAR(10),
-    CustName VARCHAR(50),
-    CustEmail VARCHAR(50),
-    BookTitle VARCHAR(60),
-    Publisher VARCHAR(50),
-    UnitPrice DECIMAL(10,2),
-    Qty INT,
-    PRIMARY KEY (OrderID, BookID)
-);
+## 📁 Files Included
+* `car_rental_script.sql`: The main SQL file containing database creation, table schemas, sample data insertion, JOIN queries, views, triggers, and stored procedures.
+* `Report.docx`: Detailed lab report containing normalization breakdown and query outputs.
 
--- Inserting the atomic data based on the original flat table.
-INSERT INTO OrderBook_1NF VALUES
-('O-501', 'B-1', '2026-04-02', 'C-11', 'Ahmad', 'ahmad@x.com', 'SQL Basics', 'Pearson', 1200, 1),
-('O-501', 'B-2', '2026-04-02', 'C-11', 'Ali', 'ali@x.com', 'Python 101', 'OReilly', 1500, 2),
-('O-502', 'B-1', '2026-04-03', 'C-12', 'Areeba', 'areeba@x.com', 'SQL Basics', 'Pearson', 1200, 3),
-('O-503', 'B-3', '2026-04-05', 'C-11', 'Bilal', 'bilal@x.com', 'Networks', 'Pearson', 1800, 1),
-('O-503', 'B-2', '2026-04-05', 'C-11', 'Bilal', 'bilal@x.com', 'Python 101', 'OReilly', 1500, 1);
+---
+
+## 🚀 How to Run
+1. Open your MySQL environment (e.g., XAMPP phpMyAdmin or MySQL Workbench).
+2. Import or paste the script from `car_rental_script.sql`.
+3. Run the script to automatically build the database, populate realistic sample data, and test the procedures.
+
+---
+**Student Info:**  
+* **Name:** Hasnain Malik  
+* **Roll Number:** 2024-SE-37  
+* **Course:** Database Management Systems
